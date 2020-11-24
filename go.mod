@@ -1,4 +1,4 @@
-module robot-hduin
+module miraigo-robot
 
 go 1.15
 

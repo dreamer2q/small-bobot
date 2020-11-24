@@ -1,10 +1,10 @@
 package app
 
 import (
+	"miraigo-robot/bot"
+	"miraigo-robot/config"
 	"os"
 	"os/signal"
-	"robot-hduin/bot"
-	"robot-hduin/config"
 )
 
 func Init() {

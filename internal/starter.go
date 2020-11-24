@@ -1,9 +1,9 @@
 package internal
 
 import (
-	"robot-hduin/config"
-	"robot-hduin/internal/app"
-	"robot-hduin/utils"
+	"miraigo-robot/config"
+	"miraigo-robot/internal/app"
+	"miraigo-robot/utils"
 )
 
 func Start() {
