@@ -1,0 +1,12 @@
+{
+  "display": "MIRAI.415395.001",
+  "product": "mirai",
+  "device": "mirai",
+  "board": "mirai",
+  "model": "mirai",
+  "finger_print": "mamoe/mirai/mirai:10/MIRAI.200122.001/0223216:user/release-keys",
+  "boot_id": "9539d34a-bec8-16f6-8df7-5eb3158cf6cf",
+  "proc_version": "Linux version 3.0.31-7gBfR6A3 (android-build@xxx.xxx.xxx.xxx.com)",
+  "protocol": 0,
+  "imei": "762641695676147"
+}

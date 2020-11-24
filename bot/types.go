@@ -25,3 +25,17 @@ func (id ModuleID) Name() string {
 	parts := strings.Split(string(id), ".")
 	return parts[len(parts)-1]
 }
+
+// ModuleInfo 模块信息
+type ModuleInfo struct {
+	// ID 模块的名称
+	// 应全局唯一
+	ID ModuleID
+
+	// Instance 返回 Module
+	Instance Module
+}
+
+func (mi ModuleInfo) String() string {
+	return string(mi.ID)
+}

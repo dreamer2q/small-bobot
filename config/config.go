@@ -3,6 +3,7 @@ package config
 import (
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
+	"robot-hduin/utils"
 )
 
 type Config struct {
@@ -17,7 +18,7 @@ func Init() {
 	GlobalConfig = &Config{
 		viper.New(),
 	}
-	GlobalConfig.SetConfigName("application")
+	GlobalConfig.SetConfigName("config")
 	GlobalConfig.SetConfigType("yaml")
 	GlobalConfig.AddConfigPath(".")
 	GlobalConfig.AddConfigPath("./config")
@@ -26,4 +27,8 @@ func Init() {
 	if err != nil {
 		logrus.WithField("config", "GlobalConfig").WithError(err).Panicf("unable to read global config")
 	}
+}
+
+func ReadDeviceJson() []byte {
+	return utils.ReadFile("./config/device.json")
 }

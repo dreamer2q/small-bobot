@@ -5,7 +5,6 @@ import (
 	"bytes"
 	"fmt"
 	"image"
-	"io/ioutil"
 	"os"
 	"strings"
 	"sync"
@@ -13,9 +12,6 @@ import (
 	"github.com/Mrs4s/MiraiGo/client"
 	"github.com/sirupsen/logrus"
 	asc2art "github.com/yinghau76/go-ascii-art"
-
-	"github.com/Logiase/MiraiGo-Template/config"
-	"github.com/Logiase/MiraiGo-Template/utils"
 )
 
 // Bot 全局 Bot
@@ -30,46 +26,29 @@ var Instance *Bot
 
 var logger = logrus.WithField("bot", "internal")
 
+type Config struct {
+	Account  int64
+	Password string
+	Device   []byte
+}
+
 // Init 快速初始化
-// 使用 config.GlobalConfig 初始化账号
-// 使用 ./device.json 初始化设备信息
-func Init() {
+func Init(conf Config) {
 	Instance = &Bot{
 		client.NewClient(
-			config.GlobalConfig.GetInt64("bot.account"),
-			config.GlobalConfig.GetString("bot.password"),
+			conf.Account,
+			conf.Password,
 		),
 		false,
 	}
-	err := client.SystemDeviceInfo.ReadJson(utils.ReadFile("./device.json"))
-	if err != nil {
-		logger.WithError(err).Panic("device.json error")
-	}
-}
-
-// InitBot 使用 account password 进行初始化账号
-func InitBot(account int64, password string) {
-	Instance = &Bot{
-		client.NewClient(account, password),
-		false,
-	}
-}
-
-// UseDevice 使用 device 进行初始化设备信息
-func UseDevice(device []byte) error {
-	return client.SystemDeviceInfo.ReadJson(device)
-}
-
-// GenRandomDevice 生成随机设备信息
-func GenRandomDevice() {
-	client.GenRandomDevice()
-	b, _ := utils.FileExist("./device.json")
-	if b {
-		logger.Warn("device.json exists, will not write device to file")
-	}
-	err := ioutil.WriteFile("device.json", client.SystemDeviceInfo.ToJson(), os.FileMode(0755))
-	if err != nil {
-		logger.WithError(err).Errorf("unable to write device.json")
+	if conf.Device == nil {
+		logger.Debugf("no device specified, generate random device")
+		client.GenRandomDevice()
+	} else {
+		err := client.SystemDeviceInfo.ReadJson(conf.Device)
+		if err != nil {
+			logger.WithError(err).Panic("parse device error")
+		}
 	}
 }
 
@@ -189,9 +168,7 @@ func StartService() {
 	for _, mi := range modules {
 		mi.Instance.Init()
 	}
-	for _, mi := range modules {
-		mi.Instance.PostInit()
-	}
+
 	logger.Info("all modules initialized")
 
 	logger.Info("registering modules serve functions ...")
