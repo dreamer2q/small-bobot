@@ -13,8 +13,9 @@ type Config struct {
 // GlobalConfig 默认全局配置
 var GlobalConfig *Config
 
-// Init 使用 ./application.yaml 初始化全局配置
-func Init() {
+//init 使用 config.yml 初始化全局配置
+//请确保在使用 GlobalConfig 之前进行初始化
+func init() {
 	GlobalConfig = &Config{
 		viper.New(),
 	}
@@ -29,6 +30,7 @@ func Init() {
 	}
 }
 
+//ReadDeviceJson read device.json file
 func ReadDeviceJson() []byte {
 	return utils.ReadFile("./config/device.json")
 }

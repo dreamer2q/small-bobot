@@ -1,20 +1,15 @@
-FROM golang:buster as builder
+FROM alpine
 
-ENV GOPROXY=https://goproxy.cn
+EXPOSE 8080
 
-WORKDIR /app
+ENV TIME_ZONE=Asia/Shanghai
+RUN apk add tzdata && cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
+    && echo "Asia/Shanghai" > /etc/timezone \
+    && apk del tzdata
 
-COPY . .
+WORKDIR /root/
 
-RUN CGO_ENABLED=0 \
-    GOOS=linux \
-    GOARCH=amd64 \
-    go build -o MiraiGo .
+COPY main app
+COPY config config
 
-FROM debian:buster as runner
-
-WORKDIR /app
-
-COPY --from=builder /app/MiraiGo .
-
-ENTRYPOINT ["./MiraiGo"]
+CMD ["./app"]
