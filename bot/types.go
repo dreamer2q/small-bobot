@@ -3,9 +3,8 @@ package bot
 import "strings"
 
 // ModuleID 模块ID
-// 请使用 小写 并用 _ 代替空格
-// Example:
-// - logiase.autoreply
+// 格式 namespace.name ,请使用 _ 代替空格
+// Example: log.autoReply
 type ModuleID string
 
 // Namespace - 获取一个 Module 的 Namespace
@@ -28,8 +27,7 @@ func (id ModuleID) Name() string {
 
 // ModuleInfo 模块信息
 type ModuleInfo struct {
-	// ID 模块的名称
-	// 应全局唯一
+	// ID 模块的名称, 应全局唯一
 	ID ModuleID
 
 	// Instance 返回 Module

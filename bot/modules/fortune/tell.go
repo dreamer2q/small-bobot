@@ -1,11 +1,9 @@
 package fortune
 
 import (
-	"github.com/Mrs4s/MiraiGo/message"
 	"miraigo-robot/bot"
 	"miraigo-robot/config"
 	"miraigo-robot/utils"
-	"sync"
 )
 
 type Fortune struct{}
@@ -31,17 +29,17 @@ func (f Fortune) Init() {
 	logger.Infof("module fortune: started")
 }
 
-func (f Fortune) Serve(bot *bot.Bot) {
+func (f Fortune) Start(bot *bot.Bot) {
 	registryEvent(bot)
 }
 
-func (f Fortune) Start(bot *bot.Bot) {
+func (f Fortune) Run() {
 	//notify admin
 	logger.Infof("notify admin: %d", admin)
-	bot.SendPrivateMessage(admin, message.NewSendingMessage().Append(message.NewText("fortune started")))
+	//bot.SendPrivateMessage(admin, message.NewSendingMessage().Append(message.NewText("fortune started")))
 }
 
-func (f Fortune) Stop(bot *bot.Bot, wg *sync.WaitGroup) {
+func (f Fortune) Stop() {
 	logger.Infof("module fortune: stopped")
 }
 

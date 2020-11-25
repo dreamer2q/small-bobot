@@ -3,7 +3,6 @@ package logging
 import (
 	"miraigo-robot/bot"
 	"miraigo-robot/utils"
-	"sync"
 
 	"github.com/Mrs4s/MiraiGo/client"
 	"github.com/Mrs4s/MiraiGo/message"
@@ -30,28 +29,27 @@ func (m *logging) Init() {
 	// 如配置读取
 }
 
-func (m *logging) Serve(b *bot.Bot) {
+func (m *logging) Start(b *bot.Bot) {
 	// 注册服务函数部分
 	registerLog(b)
 }
 
-func (m *logging) Start(b *bot.Bot) {
+func (m *logging) Run() {
 	// 此函数会新开携程进行调用
 	// ```go
-	// 		go exampleModule.Start()
+	// 		go exampleModule.Run()
 	// ```
 
 	// 可以利用此部分进行后台操作
 	// 如http服务器等等
 }
 
-func (m *logging) Stop(b *bot.Bot, wg *sync.WaitGroup) {
-	// 别忘了解锁
-	defer wg.Done()
+func (m *logging) Stop() {
 	// 结束部分
 	// 一般调用此函数时，程序接收到 os.Interrupt 信号
 	// 即将退出
 	// 在此处应该释放相应的资源或者对状态进行保存
+	// 取消订阅事件
 }
 
 var instance *logging

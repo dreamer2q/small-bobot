@@ -21,10 +21,11 @@ type Bot struct {
 	start bool
 }
 
-// Instance Bot 实例
-var Instance *Bot
-
-var logger = logrus.WithField("bot", "internal")
+var (
+	// Instance Bot 实例
+	Instance *Bot
+	logger   = logrus.WithField("bot", "internal")
+)
 
 type Config struct {
 	Account  int64
@@ -168,18 +169,18 @@ func StartService() {
 	for _, mi := range modules {
 		mi.Instance.Init()
 	}
-
 	logger.Info("all modules initialized")
 
-	logger.Info("registering modules serve functions ...")
+	logger.Info("registering modules ...")
 	for _, mi := range modules {
-		mi.Instance.Serve(Instance)
+		mi.Instance.Start(Instance)
+		logger.Infof("register module: %s", mi.ID)
 	}
-	logger.Info("all modules serve functions registered")
+	logger.Info("all modules registered")
 
 	logger.Info("starting modules tasks ...")
 	for _, mi := range modules {
-		go mi.Instance.Start(Instance)
+		go mi.Instance.Run()
 	}
 	logger.Info("tasks running")
 }
@@ -189,9 +190,13 @@ func StartService() {
 func Stop() {
 	logger.Warn("stopping ...")
 	wg := sync.WaitGroup{}
-	for _, mi := range modules {
+	for _, mod := range modules {
 		wg.Add(1)
-		mi.Instance.Stop(Instance, &wg)
+		mod := mod
+		go func() {
+			mod.Instance.Stop()
+			wg.Done()
+		}()
 	}
 	wg.Wait()
 	logger.Info("stopped")

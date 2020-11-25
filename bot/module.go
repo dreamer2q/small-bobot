@@ -17,17 +17,19 @@ type Module interface {
 
 	// Module 的生命周期
 
-	// Init 初始化
+	// Init 初始化, 整个程序中只执行移一次
+	// config 会在此之前初始化完成
 	Init()
 
-	// Serve 向Bot注册服务函数
-	Serve(bot *Bot)
-
-	// Start 启用Module
+	// Start 应该向Bot注册事件, 不可阻塞
 	Start(bot *Bot)
 
+	// Run 通过goroutine启动, 可阻塞
+	Run()
+
 	// Stop 应用结束时对所有 Module 进行通知, 在此进行资源回收
-	Stop(bot *Bot, wg *sync.WaitGroup)
+	// 这里应该取消在Serve()中订阅的事件，但是MiraiGo暂时没有提供取消订阅的功能
+	Stop()
 }
 
 // RegisterModule - 向全局添加 Module
@@ -40,9 +42,6 @@ func RegisterModule(instance Module) {
 	if mod.Instance == nil {
 		panic("missing ModuleInfo.Instance")
 	}
-	//if val := mod.Instance; val == nil {
-	//	panic("ModuleInfo.Instance must return a non-nil module instance")
-	//}
 
 	modulesMu.Lock()
 	defer modulesMu.Unlock()
