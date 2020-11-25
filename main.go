@@ -1,6 +1,6 @@
 package main
 
-import "robot-hduin/internal"
+import "miraigo-robot/internal"
 
 func main() {
 	internal.Start()
