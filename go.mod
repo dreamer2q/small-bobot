@@ -4,6 +4,7 @@ go 1.15
 
 require (
 	github.com/Mrs4s/MiraiGo v0.0.0-20201123061252-c134dbea5052
+	github.com/dreamer2q/fortune_telling v0.0.0-20201124171717-eb89bbf0afcf
 	github.com/fastly/go-utils v0.0.0-20180712184237-d95a45783239 // indirect
 	github.com/jehiah/go-strftime v0.0.0-20171201141054-1d33003b3869 // indirect
 	github.com/lestrrat-go/file-rotatelogs v2.4.0+incompatible

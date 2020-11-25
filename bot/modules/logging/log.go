@@ -1,8 +1,8 @@
 package logging
 
 import (
-	"robot-hduin/bot"
-	"robot-hduin/utils"
+	"miraigo-robot/bot"
+	"miraigo-robot/utils"
 	"sync"
 
 	"github.com/Mrs4s/MiraiGo/client"

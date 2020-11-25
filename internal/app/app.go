@@ -5,6 +5,9 @@ import (
 	"miraigo-robot/config"
 	"os"
 	"os/signal"
+
+	_ "miraigo-robot/bot/modules/fortune"
+	_ "miraigo-robot/bot/modules/logging"
 )
 
 func Init() {
@@ -18,7 +21,7 @@ func Init() {
 	// 使用协议
 	// 不同协议可能会有部分功能无法使用
 	// 在登陆前切换协议
-	bot.UseProtocol(bot.IPad)
+	bot.UseProtocol(bot.AndroidPhone)
 	// 登录
 	bot.Login()
 	// 初始化 Modules
