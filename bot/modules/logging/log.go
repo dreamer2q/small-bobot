@@ -30,12 +30,6 @@ func (m *logging) Init() {
 	// 如配置读取
 }
 
-//func (m *logging) PostInit() {
-//	// 第二次初始化
-//	// 再次过程中可以进行跨Module的动作
-//	// 如通用数据库等等
-//}
-
 func (m *logging) Serve(b *bot.Bot) {
 	// 注册服务函数部分
 	registerLog(b)
