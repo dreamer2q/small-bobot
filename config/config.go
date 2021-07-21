@@ -28,6 +28,8 @@ func init() {
 	if err != nil {
 		logrus.WithField("config", "GlobalConfig").WithError(err).Panicf("unable to read global config")
 	}
+
+	initDB()
 }
 
 //ReadDeviceJson read device.json file
