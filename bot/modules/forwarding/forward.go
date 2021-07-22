@@ -50,6 +50,16 @@ func (f *forward) Start(bot *bot.Bot) {
 			//})
 		}
 	})
+	bot.OnGroupMemberJoined(func(client *client.QQClient, event *client.MemberJoinGroupEvent) {
+		client.SendGroupMessage(f.toGroup, message.NewSendingMessage().
+			Append(message.NewText(fmt.Sprintf("%s（%v）加入《%s》",
+				event.Member.DisplayName(), event.Member.Uin, event.Group.Name))))
+	})
+	bot.OnGroupMemberLeaved(func(client *client.QQClient, event *client.MemberLeaveGroupEvent) {
+		client.SendGroupMessage(f.toGroup, message.NewSendingMessage().
+			Append(message.NewText(fmt.Sprintf("%s（%v）退出《%s》",
+				event.Member.DisplayName(), event.Member.Uin, event.Group.Name))))
+	})
 }
 
 func (f *forward) Run() {}
