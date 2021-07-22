@@ -33,21 +33,18 @@ func (f *forward) Init() {
 func (f *forward) Start(bot *bot.Bot) {
 	var regx = regexp.MustCompile(`办卡|移动|电信|宽带|闪讯|拨号`)
 	bot.OnGroupMessage(func(client *client.QQClient, msg *message.GroupMessage) {
-		var txt = msg.ToString()
+		var txt string
+		for _, elem := range msg.Elements {
+			if elem.Type() == message.Text {
+				txt += elem.(*message.TextElement).Content
+			}
+		}
 		if regx.MatchString(txt) {
 			var elems = []message.IMessageElement{
-				message.NewText(fmt.Sprintf("%s (%v)<%s> 触发关键词\n",
-					msg.Sender.DisplayName(), msg.Sender.Uin, msg.GroupName))}
+				message.NewText(fmt.Sprintf("《%s》%s（%v）触发关键词\n",
+					msg.GroupName, msg.Sender.DisplayName(), msg.Sender.Uin))}
 			elems = append(elems, msg.Elements...)
 			client.SendGroupMessage(f.toGroup, &message.SendingMessage{Elements: elems})
-			//client.SendGroupForwardMessage(f.toGroup, &message.ForwardMessage{
-			//	Nodes: []*message.ForwardNode{{
-			//		Message:    msg.Elements,
-			//		SenderId:   msg.Sender.Uin,
-			//		SenderName: msg.Sender.DisplayName(),
-			//		Time:       msg.Time,
-			//	}},
-			//})
 		}
 	})
 	bot.OnGroupMemberJoined(func(client *client.QQClient, event *client.MemberJoinGroupEvent) {
