@@ -2,12 +2,13 @@ package fortune
 
 import (
 	"fmt"
-	"github.com/Mrs4s/MiraiGo/client"
-	"github.com/Mrs4s/MiraiGo/message"
-	telling "github.com/dreamer2q/fortune_telling"
 	"miraigo-robot/bot"
 	"strings"
 	"text/template"
+
+	"github.com/Mrs4s/MiraiGo/client"
+	"github.com/Mrs4s/MiraiGo/message"
+	telling "github.com/dreamer2q/fortune_telling"
 )
 
 var (
@@ -46,7 +47,7 @@ func onGroupMsg(clt *client.QQClient, msg *message.GroupMessage) {
 		rpl.Append(message.NewText("\n"))
 
 		if err != nil {
-			rpl.Append(message.NewText("你已经求过签了，请们明天再来吧"))
+			rpl.Append(message.NewText("你已经求过签了，请明天再来吧"))
 		} else {
 			sb := &strings.Builder{}
 			err = signTmpl.Execute(sb, &tell)
