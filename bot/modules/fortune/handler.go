@@ -43,8 +43,7 @@ func onGroupMsg(clt *client.QQClient, msg *message.GroupMessage) {
 	if msg.ToString() == "求签" {
 		tell, err := telling.Ask(fmt.Sprintf("%v", msg.Sender.Uin))
 		rpl := message.NewSendingMessage()
-		rpl.Append(message.NewAt(msg.Sender.Uin))
-		rpl.Append(message.NewText("\n"))
+		rpl.Append(message.NewReply(msg))
 
 		if err != nil {
 			rpl.Append(message.NewText("你已经求过签了，请明天再来吧"))
