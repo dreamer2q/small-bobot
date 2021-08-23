@@ -6,10 +6,11 @@ import (
 	"os"
 	"os/signal"
 
+	_ "miraigo-robot/bot/modules/cutegirls"
 	_ "miraigo-robot/bot/modules/fortune"
+	_ "miraigo-robot/bot/modules/forwarding"
 	_ "miraigo-robot/bot/modules/logging"
 	//_ "miraigo-robot/bot/modules/zhaosheng"
-	_ "miraigo-robot/bot/modules/forwarding"
 )
 
 func Init() {
