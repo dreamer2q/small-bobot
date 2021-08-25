@@ -118,7 +118,8 @@ func onGroupMsg(clt *client.QQClient, msg *message.GroupMessage) {
 		}
 
 		reply(func() error {
-			song, err := Search(keys[1])
+			keywords := strings.ReplaceAll(keys[1], "-", " ")
+			song, err := Search(keywords)
 			if err != nil {
 				logger.Warnf("search: %v", err)
 				return errors.New("搜索歌曲失败，请稍后重试")
