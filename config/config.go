@@ -3,7 +3,6 @@ package config
 import (
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
-	"miraigo-robot/utils"
 )
 
 type Config struct {
@@ -23,6 +22,7 @@ func init() {
 	GlobalConfig.SetConfigType("yaml")
 	GlobalConfig.AddConfigPath(".")
 	GlobalConfig.AddConfigPath("./config")
+	GlobalConfig.AddConfigPath("/etc/smbot")
 
 	err := GlobalConfig.ReadInConfig()
 	if err != nil {
@@ -34,5 +34,17 @@ func init() {
 
 //ReadDeviceJson read device.json file
 func ReadDeviceJson() []byte {
-	return utils.ReadFile("./config/device.json")
+	const device = `{
+		"display": "MIRAI.415395.001",
+		"product": "mirai",
+		"device": "mirai",
+		"board": "mirai",
+		"model": "mirai",
+		"finger_print": "mamoe/mirai/mirai:10/MIRAI.200122.001/0223216:user/release-keys",
+		"boot_id": "9539d34a-bec8-16f6-8df7-5eb3158cf6cf",
+		"proc_version": "Linux version 3.0.31-7gBfR6A3 (android-build@xxx.xxx.xxx.xxx.com)",
+		"imei": "762641695676147"
+	}`
+	// return utils.ReadFile("./config/device.json")
+	return []byte(device)
 }

@@ -1,9 +1,13 @@
 .idea/
+.vscode/
 
 config/config.yaml
 config/config.yml
+
+data/
 
 *.exe
 
 logs/
 
+__debug_bin
