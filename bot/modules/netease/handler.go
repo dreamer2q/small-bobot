@@ -68,8 +68,8 @@ func onGroupMsg(clt *client.QQClient, msg *message.GroupMessage) {
 	upload := func(mp3url string) error {
 		raw, err := utils.GetBytes(mp3url)
 		if err != nil {
-			logger.Warnf("upload: %v", err)
-			return err
+			logger.Warnf("get bytes: %v", err)
+			return errors.New("歌曲下载失败")
 		}
 		if !utils.IsAMRorSILK(raw) {
 			mt := mimetype.Detect(raw)
@@ -82,19 +82,19 @@ func onGroupMsg(clt *client.QQClient, msg *message.GroupMessage) {
 			}
 			if !lawful {
 				logger.Infof("invalid audio type: " + mt.String())
-				return errors.New("无效类型 " + mt.String())
+				return errors.New("歌曲格式错误")
 			}
 			silkBytes, err := utils.EncoderSilk(raw)
 			if err != nil {
 				logger.Warnf("encode: %v", err)
-				return err
+				return errors.New("歌曲转码失败")
 			}
 			raw = silkBytes
 		}
 		gm, err := clt.UploadGroupPtt(msg.GroupCode, bytes.NewReader(raw))
 		if err != nil {
 			logger.Warnf("upload group ppt: %v", err)
-			return err
+			return errors.New("歌曲上传失败")
 		}
 		r.Append(gm)
 		return nil
@@ -105,7 +105,7 @@ func onGroupMsg(clt *client.QQClient, msg *message.GroupMessage) {
 			song, err := GetRandomSong()
 			if err != nil {
 				logger.Warnf("求歌: %v", err)
-				return err
+				return errors.New("数据获取失败")
 			}
 			return upload(song.Data.Url)
 		})
@@ -121,7 +121,7 @@ func onGroupMsg(clt *client.QQClient, msg *message.GroupMessage) {
 			song, err := Search(keys[1])
 			if err != nil {
 				logger.Warnf("search: %v", err)
-				return err
+				return errors.New("搜索歌曲失败，请稍后重试")
 			}
 			if song.Result.Count == 0 {
 				logger.Warnf("search result empty")

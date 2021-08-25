@@ -2,10 +2,10 @@ package config
 
 import (
 	"fmt"
-	"gorm.io/driver/mysql"
-	_ "gorm.io/driver/mysql"
-	"gorm.io/gorm"
 	"log"
+
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
 )
 
 var (
