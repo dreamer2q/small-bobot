@@ -5,8 +5,10 @@ import (
 	"miraigo-robot/config"
 	"os"
 	"os/signal"
+	"syscall"
 
-	_ "miraigo-robot/bot/modules/cutegirls"
+	_ "miraigo-robot/bot/modules/randimages"
+	// _ "miraigo-robot/bot/modules/cutegirls"
 	_ "miraigo-robot/bot/modules/fortune"
 	_ "miraigo-robot/bot/modules/forwarding"
 	_ "miraigo-robot/bot/modules/logging"
@@ -33,8 +35,8 @@ func Init() {
 	// 刷新好友列表，群列表
 	bot.RefreshList()
 	// wait
-	ch := make(chan os.Signal, 1)
-	signal.Notify(ch, os.Interrupt, os.Kill)
-	<-ch
+	sigals := make(chan os.Signal, 1)
+	signal.Notify(sigals, os.Interrupt, syscall.SIGTERM, syscall.SIGKILL)
+	<-sigals
 	bot.Stop()
 }
