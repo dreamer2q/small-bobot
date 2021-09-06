@@ -9,6 +9,7 @@ import (
 
 	_ "miraigo-robot/bot/modules/randimages"
 	// _ "miraigo-robot/bot/modules/cutegirls"
+	_ "miraigo-robot/bot/modules/faq"
 	_ "miraigo-robot/bot/modules/fortune"
 	_ "miraigo-robot/bot/modules/forwarding"
 	_ "miraigo-robot/bot/modules/logging"
