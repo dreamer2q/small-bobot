@@ -4,6 +4,7 @@ import (
 	"path"
 	"time"
 
+	"github.com/Mrs4s/MiraiGo/message"
 	rotatelogs "github.com/lestrrat-go/file-rotatelogs"
 	"github.com/rifflock/lfshook"
 	"github.com/sirupsen/logrus"
@@ -44,4 +45,14 @@ func WriteLogToPath(p string) {
 			logrus.FatalLevel: writer,
 		}, &logrus.JSONFormatter{},
 	))
+}
+
+func GetGroupTextMsg(msg *message.GroupMessage) string {
+	var txt string
+	for _, elem := range msg.Elements {
+		if elem.Type() == message.Text {
+			txt += elem.(*message.TextElement).Content
+		}
+	}
+	return txt
 }

@@ -52,7 +52,7 @@ var _ bot.Module = mod{}
 //onGroupMsg handle specified message and make reply
 func onGroupMsg(clt *client.QQClient, msg *message.GroupMessage) {
 
-	textMsg := msg.ToString()
+	textMsg := utils.GetGroupTextMsg(msg)
 	faqs := make([]Faq, 0)
 	rpl := message.NewSendingMessage().Append(message.NewReply(msg))
 
