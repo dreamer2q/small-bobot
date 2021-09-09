@@ -9,7 +9,7 @@ import (
 )
 
 const (
-	baseURL = "https://netease-cloud-music-api-nine-delta.vercel.app"
+	baseURL = "https://163.lpddr5.cn"
 )
 
 type Payload = map[string]interface{}
