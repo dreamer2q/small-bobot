@@ -56,3 +56,16 @@ func GetGroupTextMsg(msg *message.GroupMessage) string {
 	}
 	return txt
 }
+
+func IsAt(msg *message.GroupMessage, uid int64) bool {
+	var at int64 = -1
+loop:
+	for _, elem := range msg.Elements {
+		switch elem := elem.(type) {
+		case *message.AtElement:
+			at = elem.Target
+			break loop
+		}
+	}
+	return at == uid
+}
