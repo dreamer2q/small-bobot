@@ -14,6 +14,8 @@ type Faq struct {
 	Question string // 正则问题
 	Answer   string // 回答
 
+	PenaltyTime uint32 // 罚时
+
 	Enabled bool // 是否启用
 }
 

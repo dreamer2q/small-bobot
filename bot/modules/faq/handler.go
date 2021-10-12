@@ -52,11 +52,16 @@ var _ bot.Module = mod{}
 //onGroupMsg handle specified message and make reply
 func onGroupMsg(clt *client.QQClient, msg *message.GroupMessage) {
 
+	mi, err := clt.GetMemberInfo(msg.GroupCode, msg.Sender.Uin)
+	if err != nil {
+		logger.Errorf("get group member info: %v", err)
+		return
+	}
 	textMsg := utils.GetGroupTextMsg(msg)
 	faqs := make([]Faq, 0)
 	rpl := message.NewSendingMessage().Append(message.NewReply(msg))
 
-	err := db.Where(&Faq{GroupID: msg.GroupCode, Enabled: true}).
+	err = db.Where(&Faq{GroupID: msg.GroupCode, Enabled: true}).
 		Find(&faqs).
 		Error
 	if err != nil {
@@ -82,6 +87,10 @@ func onGroupMsg(clt *client.QQClient, msg *message.GroupMessage) {
 		ans := message.NewText(faq.Answer)
 		rpl.Append(ans)
 		clt.SendGroupMessage(msg.GroupCode, rpl)
+
+		if faq.PenaltyTime > 0 && mi.Permission == client.Member {
+			mi.Mute(faq.PenaltyTime)
+		}
 		break
 	}
 }
