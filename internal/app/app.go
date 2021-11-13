@@ -16,7 +16,9 @@ import (
 	_ "miraigo-robot/bot/modules/netease"
 	_ "miraigo-robot/bot/modules/purify"
 	_ "miraigo-robot/bot/modules/welcome"
+
 	//_ "miraigo-robot/bot/modules/zhaosheng"
+	_ "miraigo-robot/bot/modules/randsentence"
 )
 
 func Init() {
