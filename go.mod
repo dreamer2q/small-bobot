@@ -3,7 +3,7 @@ module miraigo-robot
 go 1.15
 
 require (
-	github.com/Mrs4s/MiraiGo v0.0.0-20210711150419-2d79fccd1060
+	github.com/Mrs4s/MiraiGo v0.0.0-20211213125355-d55929cf1241
 	github.com/PuerkitoBio/goquery v1.5.0
 	github.com/dreamer2q/fortune_telling v0.0.0-20201125025534-593333be7cd1
 	github.com/elazarl/goproxy v0.0.0-20210110162100-a92cc753f88e // indirect
