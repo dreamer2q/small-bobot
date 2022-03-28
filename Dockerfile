@@ -12,7 +12,7 @@ RUN set -ex \
     && cd /build \
     && go build -ldflags "-s -w -extldflags '-static'" -o smbot 
 
-FROM alpine:latest
+FROM alpine:3.15
 
 ENV TIME_ZONE=Asia/Shanghai
 
